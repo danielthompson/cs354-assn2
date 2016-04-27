@@ -7,13 +7,13 @@
 
 #include "Constants.h"
 #include "GLLight.h"
+#include "Trimesh.h"
 
 class OpenGLInterface {
 
 private:
    void InitGraphics();
    void BuildPopupMenu();
-
    void ResetPerspective();
 
    void DrawOverlay();
@@ -22,7 +22,7 @@ private:
 
    GLenum _polygonMode = GL_FILL;
    GLint _perspectiveFOV = 45;
-   GLfloat _keyboardSensitivity = .5f;
+   GLfloat _keyboardSensitivity = 5.f;
    GLfloat _mouseSensitivity = .2f;
    int _mousePrevX = 0;
    int _mousePrevY = 0;
@@ -35,10 +35,16 @@ private:
 
    GLLight _lights[4];
 
+   Trimesh *_mesh;
+
 public:
    OpenGLInterface() {};
+   OpenGLInterface(Trimesh *trimesh);
 
    void Init(int i, char **pString);
+
+   void MainLoop();
+
    void Display();
 
    void Reshape(int w, int h);

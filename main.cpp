@@ -57,11 +57,19 @@ int main(int argc, char **argv) {
    else n = 2;
 
    */
-   OpenGLInterface interface = OpenGLInterface();
+
+
+   TrimeshLoader trimesh = TrimeshLoader();
+
+   Trimesh mesh = Trimesh();
+
+   trimesh.loadOBJ("models/mannequin.obj", &mesh);
+
+   OpenGLInterface interface = OpenGLInterface(&mesh);
 
    interface.Init(argc, argv);
 
-
+   interface.MainLoop();
 
    return 0;
 }

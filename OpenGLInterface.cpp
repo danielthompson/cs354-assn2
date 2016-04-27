@@ -72,7 +72,7 @@ void OpenGLInterface::Init(int argc, char **argv) {
    GLfloat color3[4] = {.706f, .11f, .063f, 1};
    _lights[3] = GLLight(position3, color3, .001f);
 
-   glutMainLoop();
+
 }
 
 void OpenGLInterface::InitGraphics() {
@@ -203,6 +203,23 @@ void OpenGLInterface::Display() {
    }
 
    // display objects
+   if (_mesh != NULL) {
+      glBegin(GL_TRIANGLES);
+      glColor3f(.7, .7, .7);
+      for (int i = 0; i < _mesh->Faces->size(); i++) {
+
+         for (int j = 0; j < 3; j++) {
+            int vertexIndex = _mesh->Faces->at(i)[j];
+
+            float x = _mesh->Vertices->at(vertexIndex)[0];
+            float y = _mesh->Vertices->at(vertexIndex)[1];
+            float z = _mesh->Vertices->at(vertexIndex)[2];
+            glVertex3f(x, y, z);
+
+         }
+      }
+      glEnd();
+   }
 
 
    DrawOverlay();
@@ -380,4 +397,14 @@ void OpenGLInterface::DrawString(void * font, std::string string) {
       glutBitmapCharacter(font, string[i]);
    }
 }
+
+void OpenGLInterface::MainLoop() {
+   glutMainLoop();
+}
+
+OpenGLInterface::OpenGLInterface(Trimesh *trimesh) {
+   _mesh = trimesh;
+}
+
+
 
